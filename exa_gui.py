@@ -72,6 +72,7 @@ def read_stacks(image):
 
             result_scores = [
                 cv2.matchTemplate(crop_image, cards[i], cv2.TM_SQDIFF)
+                # cv2.matchTemplate(crop_image, cards[i], cv2.TM_CCOEFF)
                 for i in range(len(cards))
             ]
 
@@ -140,6 +141,11 @@ def execute_solution(offset_x, offset_y, moves):
         # which stack, how many cards down -> which stack, how many cards down
         x_pre, y_pre, x_post, y_post = move
 
+        y_pre = y_pre + 2
+        y_post = y_post + 2
+        print("Taking item", str(y_pre), "from stack", x_pre)
+        print("Placing in ", str(y_post), "from stack", x_post)
+
         # If it's a regular stack, move to the offset
         if x_pre < CONFIG["number_stacks"]:
             x_pre_final = (
@@ -201,13 +207,22 @@ def execute_solution(offset_x, offset_y, moves):
             duration=CONFIG["base_delay"]
         )
 
-        # Click and drag to the end
-        pyautogui.dragTo(
+        # # Click and drag to the end
+        # pyautogui.dragTo(
+        #     x_post_final * CONFIG["resolution_scale_click"],
+        #     y_post_final * CONFIG["resolution_scale_click"],
+        #     duration=CONFIG["base_delay"],
+        #     button="left"
+        # )
+        pyautogui.mouseDown()
+        time.sleep(CONFIG["base_delay"])
+        pyautogui.moveTo(
             x_post_final * CONFIG["resolution_scale_click"],
             y_post_final * CONFIG["resolution_scale_click"],
-            duration=CONFIG["base_delay"],
-            button="left"
+            duration=CONFIG["base_delay"]
         )
+        time.sleep(CONFIG["base_delay"])
+        pyautogui.mouseUp()
 
         # Wait for a while
         time.sleep(CONFIG["base_delay"])
