@@ -141,10 +141,9 @@ def execute_solution(offset_x, offset_y, moves):
         # which stack, how many cards down -> which stack, how many cards down
         x_pre, y_pre, x_post, y_post = move
 
-        y_pre = y_pre + 2
-        y_post = y_post + 2
-        print("Taking item", str(y_pre), "from stack", x_pre)
-        print("Placing in ", str(y_post), "from stack", x_post)
+        y_post = y_post + 1
+        print("Taking item", str(y_pre), "from stack", x_pre,
+              "\tPlacing in ", str(y_post), "at stack", x_post)
 
         # If it's a regular stack, move to the offset
         if x_pre < CONFIG["number_stacks"]:
@@ -219,7 +218,7 @@ def execute_solution(offset_x, offset_y, moves):
         pyautogui.moveTo(
             x_post_final * CONFIG["resolution_scale_click"],
             y_post_final * CONFIG["resolution_scale_click"],
-            duration=CONFIG["base_delay"]
+            duration=CONFIG["base_delay"] * 4
         )
         time.sleep(CONFIG["base_delay"])
         pyautogui.mouseUp()

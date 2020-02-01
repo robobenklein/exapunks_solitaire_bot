@@ -57,6 +57,7 @@ class Stack(object):
 
     @classmethod
     def compatible(cls, top, bottom):
+        # NOTE nothing wrong here?
         """
         Tests compatibility of two cards -- can bottom be placed under top in
         a solitaire context?
@@ -79,6 +80,7 @@ class Stack(object):
         return 0
 
     def is_move_to_legal(self, card):
+        # NOTE seems fine here
         """ Is a move described by the argument 'card' to this stack legal? """
 
         # If stack is locked, not valid
@@ -405,12 +407,18 @@ class Game(object):
         for i, j in moves:
 
             # Take the cards off the origin stack
+            pre_move_stacks_i_len = len(self.stacks[i].stack)
             if self.stacks[j].card_type == "freecell":
                 cards_move = self.stacks[i].resolve_move_from(1)
             else:
                 cards_move = self.stacks[i].resolve_move_from(0)
 
-            y_offset_pre = len(self.stacks[i].stack) - len(cards_move)
+            y_offset_pre = pre_move_stacks_i_len - len(cards_move)
+            if y_offset_pre < 0:
+                print("y_offset_pre", y_offset_pre)
+                print("self.stacks[i].stack", self.stacks[i].stack)
+                print("cards_move", cards_move)
+                raise Exception("y_offset_pre less than zero")
             y_offset_post = max(0, len(self.stacks[j].stack) - 1)
 
             # The text we're going to print
@@ -536,6 +544,7 @@ class Game(object):
         # Get ready to store the children
         results = []
         valid_moves = self.enumerate_moves()
+        # NOTE nothing negative here
 
         # Iterate through moves
         for move in valid_moves:
