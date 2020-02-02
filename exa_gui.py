@@ -256,11 +256,11 @@ def loop_many(max_i=3):
         execute_solution(offset_x, offset_y, result)
 
         print("Done game %d / %d... " % (i + 1, max_i))
-        time.sleep(4)
+        time.sleep(2)
 
         if i < max_i - 1:
             click_new_game(offset_x, offset_y)
-            time.sleep(CONFIG["base_delay"] * 25)
+            time.sleep(6)
 
 
 def main():

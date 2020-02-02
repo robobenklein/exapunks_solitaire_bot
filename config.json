@@ -16,7 +16,7 @@
 	"card_filename": "card_back/1080x1/*.png",
 	"click_offset_x": 40,
 	"click_offset_y": 21,
-	"base_delay": 0.1,
+	"base_delay": 0.0,
 	"window_click_offset_x": 100,
 	"window_click_offset_y": 100,
 	"new_game_offset_x": 1064,
